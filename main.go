@@ -17,10 +17,10 @@ import (
 
 var (
 	subscriptionID        string
-	location              = "centalus"
+	location              = "global"
 	resourceGroupName     = "abutcher-az-vxgb6-rg"
-	privateZoneName       = "sample-private-zone"
-	relativeRecordSetName = "sample-relative-record-set"
+	privateZoneName       = "cheese.biscuits.com"
+	relativeRecordSetName = "corn-flavored.cheese.biscuits.com"
 )
 
 func main() {
@@ -54,11 +54,13 @@ func main() {
 	}
 	log.Println("private zone:", *privateZone.ID)
 
-	recordSets, err := createRecordSets(ctx, cred)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("record sets:", *recordSets.ID)
+	/*
+		recordSets, err := createRecordSets(ctx, cred)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Println("record sets:", *recordSets.ID)
+	*/
 
 	keepResource := os.Getenv("KEEP_RESOURCE")
 	if len(keepResource) == 0 {
