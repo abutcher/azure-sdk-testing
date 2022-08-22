@@ -17,10 +17,11 @@ import (
 
 var (
 	subscriptionID        string
-	location              = "global"
-	resourceGroupName     = "abutcher-az-vxgb6-rg"
-	privateZoneName       = "cheese.biscuits.com"
-	relativeRecordSetName = "corn-flavored.cheese.biscuits.com"
+	clientID              string
+	location              string
+	resourceGroupName     string
+	privateZoneName       string
+	relativeRecordSetName = ""
 )
 
 func main() {
@@ -29,10 +30,30 @@ func main() {
 		log.Fatal("AZURE_SUBSCRIPTION_ID is not set.")
 	}
 
+	clientID = os.Getenv("AZURE_CLIENT_ID")
+	if len(clientID) == 0 {
+		log.Fatal("AZURE_CLIENT_ID is not set.")
+	}
+
+	location = os.Getenv("AZURE_LOCATION")
+	if len(location) == 0 {
+		log.Fatal("AZURE_LOCATION is not set.")
+	}
+
+	resourceGroupName = os.Getenv("AZURE_RESOURCEGROUP_NAME")
+	if len(resourceGroupName) == 0 {
+		log.Fatal("AZURE_RESOURCEGROUP_NAME is not set.")
+	}
+
+	privateZoneName = os.Getenv("AZURE_PRIVATE_DNSZONE")
+	if len(privateZoneName) == 0 {
+		log.Fatal("AZURE_PRIVATE_DNSZONE is not set.")
+	}
+
 	// Select user-assigned identity via its clientID.
 	// Does the clientID come from a secret? OR do we create a NewManagedIdentityCredential
 	// with no options to select a system-assigned identity instead?
-	clientID := azidentity.ClientID("7be31448-2452-4257-a67e-24cdd7fad509")
+	clientID := azidentity.ClientID(clientID)
 	opts := azidentity.ManagedIdentityCredentialOptions{ID: clientID}
 	cred, err := azidentity.NewManagedIdentityCredential(&opts)
 	if err != nil {
