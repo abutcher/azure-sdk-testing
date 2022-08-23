@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: azuresdktesting
+spec:
+  hostNetwork: true
+  containers:
+    - image: quay.io/abutcher/azuresdktesting:latest
+      name: azuresdktesting
+      env:
+      - name: AZURE_SUBSCRIPTION_ID
+        value: ""
+      - name: AZURE_CLIENT_ID
+        value: ""
+      - name: AZURE_LOCATION
+        value: global
+      - name: AZURE_RESOURCEGROUP_NAME
+        value: ""
+      - name: AZURE_PRIVATE_DNSZONE
+        value: ""
+  nodeSelector:
+    kubernetes.io/os: linux
